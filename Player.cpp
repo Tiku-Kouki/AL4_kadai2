@@ -51,6 +51,9 @@ void Player::Initalize(const std::vector<Model*>& models) {
 
 void Player::Update() {
 	
+	
+
+
 	if (behaviorRequest_) {
 	
 	behavior_ = behaviorRequest_.value();
@@ -174,15 +177,24 @@ void Player::BehaviorRootUpdate() {
 
 	if (Input::GetInstance()->GetJoystickState(0, joyState)) {
 
-		if (joyState.Gamepad.wButtons == XINPUT_GAMEPAD_A) {
+		/*if (joyState.Gamepad.wButtons == XINPUT_GAMEPAD_B) {
 
 		behaviorRequest_ = Behavior::kAttack;
-		}
+		}*/
 
 
 		move.x += (float)joyState.Gamepad.sThumbLX / SHRT_MAX * kCharacterSpeed;
 
 		move.z += (float)joyState.Gamepad.sThumbLY / SHRT_MAX * kCharacterSpeed;
+
+		const float kMoveLimitX = 150;
+		const float kMoveLimitZ = 150;
+
+		worldTransform_[0].translation_.x = max(worldTransform_[0].translation_.x, -kMoveLimitX);
+		worldTransform_[0].translation_.x = min(worldTransform_[0].translation_.x, +kMoveLimitX);
+		worldTransform_[0].translation_.z = max(worldTransform_[0].translation_.z, -kMoveLimitZ);
+		worldTransform_[0].translation_.z = min(worldTransform_[0].translation_.z, +kMoveLimitZ);
+
 
 		// move = Multiply(kCharacterSpeed, Normalize(move));
 
@@ -204,10 +216,34 @@ void Player::BehaviorRootUpdate() {
 
 	UpdateFloatingGimmick();
 
-	for (int i = 0; i < 4; i++) {
-		worldTransform_[0].translation_.x += move.x;
+
+	if (joyState.Gamepad.wButtons == XINPUT_GAMEPAD_A ||
+	    joyState.Gamepad.wButtons == XINPUT_GAMEPAD_B) {
+
+		worldTransform_[0].translation_.x += move.x * 10;
 		worldTransform_[0].translation_.y += move.y;
-		worldTransform_[0].translation_.z += move.z;
+		worldTransform_[0].translation_.z += move.z * 10;
+
+		
+		worldTransform_[2].rotation_ = {0.45f, 0.0f, 0.0f};
+		
+		worldTransform_[3].rotation_ = {0.45f, 0.0f, 0.0f};
+		
+
+	} else {
+	
+		worldTransform_[0].translation_.x += move.x * 7;
+		worldTransform_[0].translation_.y += move.y;
+		worldTransform_[0].translation_.z += move.z * 7;
+
+		worldTransform_[2].rotation_ = {0.0f, 0.0f, 0.0f};
+
+		worldTransform_[3].rotation_ = {0.0f, 0.0f, 0.0f};
+	
+	}
+
+	for (int i = 0; i < 4; i++) {
+		
 
 		worldTransform_[i].UpdateMatrix();
 	}
