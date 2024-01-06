@@ -16,13 +16,11 @@ public:
 
 	void Draw(ViewProjection& viewProjection) override;
 
-	Vector3 GetWorldPosition();
+	Vector3 GetWorldPosition1();
 
-	void a1Shuffle(Vector3 translation);
+	Vector3 GetWorldPosition2();
 
-	void a2Shuffle(Vector3 translation);
-
-	void a3Shuffle(Vector3 translation);
+	Vector3 GetWorldPosition3();
 
 
 

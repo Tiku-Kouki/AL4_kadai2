@@ -32,6 +32,12 @@ void GameScene::Initialize() {
 	modelEnemyL_arm_.reset(Model::CreateFromOBJ("needle_L_arm", true));
 	modelEnemyR_arm_.reset(Model::CreateFromOBJ("needle_R_arm", true));
 
+	  // 3Dモデル
+	modelUme_.reset(Model::CreateFromOBJ("ume", true));
+	modelNori_.reset(Model::CreateFromOBJ("nori", true));
+	modelEbi_.reset(Model::CreateFromOBJ("ebi", true));
+
+
 	viewProjection_.Initialize();
 
 	followCamera_ = std::make_unique<FollowCamera>();
@@ -54,8 +60,11 @@ void GameScene::Initialize() {
 
 	enemy_->Initalize(enemyModels);
 
-
+	  aitem_ = std::make_unique<Aitem>();
 	
+	  std::vector<Model*> aitemModels = {modelUme_.get(), modelNori_.get(), modelEbi_.get()};
+
+	  aitem_->Initalize(aitemModels);
 
 	followCamera_->SetTarget(&player_->GetWorldTransform());
 	
@@ -83,7 +92,7 @@ void GameScene::Update() {
 	skydome_->Update();
 	ground_->Update();
 	enemy_->Update();
-
+	aitem_->Update();
 
 #ifdef _DEBUG
 
@@ -135,6 +144,8 @@ void GameScene::Draw() {
 	ground_->Draw(viewProjection_);
 
 	enemy_->Draw(viewProjection_);
+
+	aitem_->Draw(viewProjection_);
 
 	// 3Dオブジェクト描画後処理
 	Model::PostDraw();
