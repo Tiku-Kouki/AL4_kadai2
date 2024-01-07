@@ -96,6 +96,12 @@ void GameScene::Update() {
 
 	 CheckAllCollisions();
 
+	 if (score >= maxScore) {
+	 
+	 
+	 
+	 }
+
 
 #ifdef _DEBUG
 
