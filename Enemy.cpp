@@ -50,7 +50,7 @@ void Enemy::Update() {
 
 		worldTransform_[i].UpdateMatrix();
 	}
-
+#ifdef DEBUG
 	ImGui::Begin("Enemy");
 
 	ImGui::DragFloat3("Body", &worldTransform_[0].translation_.x, 0.01f);
@@ -58,6 +58,7 @@ void Enemy::Update() {
 	ImGui::DragFloat3("Arm_R", &worldTransform_[2].translation_.x, 0.01f);
 	ImGui::DragFloat3("Root", &worldTransform_[0].rotation_.x, 0.01f);
 	ImGui::End();
+	#endif
 }
 
 void Enemy::Draw(ViewProjection& viewProjection) {

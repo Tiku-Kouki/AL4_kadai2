@@ -55,12 +55,15 @@ void FollowCamera::Update() {
 	viewProjection_.UpdateMatrix();
 	// viewProjection_.TransferMatrix();
 
+	#ifdef DEBUG
 	ImGui::Begin("Camera");
 
 	ImGui::DragFloat3("Translation", &viewProjection_.translation_.x, 0.01f);
 	ImGui::DragFloat3("Rotation", &viewProjection_.rotation_.x, 0.01f);
 
 	ImGui::End();
+
+	#endif
 
 }
 Vector3 FollowCamera::GetWorldPosition() {

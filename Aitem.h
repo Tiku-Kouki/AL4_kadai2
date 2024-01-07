@@ -22,7 +22,11 @@ public:
 
 	Vector3 GetWorldPosition3();
 
+	void OnColision1();
 
+	void OnColision2();
+
+	void OnColision3();
 
 private:
 	WorldTransform worldTransform_[3];

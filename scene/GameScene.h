@@ -44,9 +44,16 @@ public: // メンバ関数
 	void Update();
 
 	/// <summary>
+	/// 衝突判定と応答
+	/// </summary>
+	void CheckAllCollisions();
+
+	/// <summary>
 	/// 描画
 	/// </summary>
 	void Draw();
+
+	void Reset();
 
 private: // メンバ変数
 	DirectXCommon* dxCommon_ = nullptr;
@@ -93,6 +100,12 @@ private: // メンバ変数
 	std::unique_ptr<Aitem> aitem_ = nullptr;
 
 	std::unique_ptr<FollowCamera>followCamera_ = nullptr;
+
+	int score = 0;
+
+	int maxScore = 15;
+
+	
 
 	/// <summary>
 	/// ゲームシーン用

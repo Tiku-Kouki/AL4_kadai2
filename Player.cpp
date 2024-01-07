@@ -100,6 +100,7 @@ void Player::Update() {
 	}
 	hammer.UpdateMatrix();
 
+	#ifdef DEBUG
 
 	ImGui::Begin("player");
 
@@ -113,6 +114,7 @@ void Player::Update() {
 	ImGui::DragFloat3("hammer", &hammer.rotation_.x, 0.01f);
 
 	ImGui::End();
+#endif // DEBUG
 
 }
 
@@ -177,10 +179,7 @@ void Player::BehaviorRootUpdate() {
 
 	if (Input::GetInstance()->GetJoystickState(0, joyState)) {
 
-		/*if (joyState.Gamepad.wButtons == XINPUT_GAMEPAD_B) {
-
-		behaviorRequest_ = Behavior::kAttack;
-		}*/
+		
 
 
 		move.x += (float)joyState.Gamepad.sThumbLX / SHRT_MAX * kCharacterSpeed;
@@ -268,10 +267,7 @@ void Player::BehaviorAttackUpdate() {
 	Ease = c3 * X * X * X - c1 * X * X;
 	}
 
-	/*if (X <= 1.15 && X >= 1.1) {
-
-	worldTransform_[0].translation_.x += 2.0;
-	}*/
+	
 
 	worldTransform_[2].rotation_.x = Ease + 3.0f;
 
@@ -288,26 +284,7 @@ void Player::BehaviorAttackUpdate() {
 
 	}
 
-	/*attackTime++;
-
-	if (attackTime <= attackMaxTime) {
-
-	float frame = (attackTime / attackMaxTime);
-	float easeInBack = EaseInBack(frame * frame);
-	float weaponAngle = (float)(90) * easeInBack;
-	float armAngle = (float)(120) * easeInBack;
-
-	worldTransform_[2].rotation_.x = armAngle + 3.0f;
-
-	worldTransform_[3].rotation_.x = armAngle + 3.0f;
-
-	hammer.rotation_.x = weaponAngle;
-
-	} else if (attackTime >= attackAllFrame) {
-	attackTime = 0;
-	behaviorRequest_ = Behavior::kRoot;
-	}*/
-
+	
 
 }
 
@@ -344,3 +321,26 @@ void Player::BehaviorAttackInitialize() {
 	X = 0;
 
 }
+
+void Player::Reset() {
+
+
+	worldTransform_[0].scale_ = {3.0f, 3.0f, 3.0f};
+	worldTransform_[0].rotation_ = {0.0f, 0.0f, 0.0f};
+	worldTransform_[0].translation_ = {0.0f, 0.0f, 0.0f};
+
+	worldTransform_[1].scale_ = {1.0f, 1.0f, 1.0f};
+	worldTransform_[1].rotation_ = {0.0f, 0.0f, 0.0f};
+	worldTransform_[1].translation_ = {0.0f, 1.57f, 0.0f};
+
+	worldTransform_[2].scale_ = {1.0f, 1.0f, 1.0f};
+	worldTransform_[2].rotation_ = {0.0f, 0.0f, 0.0f};
+	worldTransform_[2].translation_ = {-0.51f, 1.26f, 0.0f};
+
+	worldTransform_[3].scale_ = {1.0f, 1.0f, 1.0f};
+	worldTransform_[3].rotation_ = {0.0f, 0.0f, 0.0f};
+	worldTransform_[3].translation_ = {0.51f, 1.26f, 0.0f};
+
+}
+
+void Player::OnColision() {}

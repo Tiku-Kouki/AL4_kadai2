@@ -94,6 +94,9 @@ void GameScene::Update() {
 	enemy_->Update();
 	aitem_->Update();
 
+	 CheckAllCollisions();
+
+
 #ifdef _DEBUG
 
 	if (input_->PushKey(DIK_SPACE)) {
@@ -108,6 +111,90 @@ void GameScene::Update() {
 	viewProjection_.TransferMatrix();
 	//viewProjection_.UpdateMatrix();
 	
+}
+
+void GameScene::CheckAllCollisions() {
+
+Vector3 posA[3], posB[3];
+
+float X[3] = {};
+float Y[3] ;
+float Z[3] ;
+
+float center[3] ;
+	float R1 = 3.0f; // 自分で決める
+	float R2 = 3.0f; // 自分で決める
+	float RR = (R1 + R2);
+	
+
+#pragma region // 自キャラとアイテム1の当たり判定
+	
+	posA[0] = player_->GetWorldPosition();
+
+	posB[0] = aitem_->GetWorldPosition1();
+
+		 X[0] = (posB[0].x - posA[0].x);
+		 Y[0] = (posB[0].y - posA[0].y);
+	     Z[0] = (posB[0].z - posA[0].z);
+
+		 center[0] = X[0] * X[0] + Y[0] * Y[0] + Z[0] * Z[0];
+		
+
+		if (center[0] <= (RR * RR)) {
+			// 自キャラの衝突時コールバックを呼び出す
+			player_->OnColision();
+			// 敵弾の衝突時コールバックを呼び出す
+			aitem_->OnColision1();
+			
+			score += 1;
+		}
+	
+#pragma endregion
+
+#pragma region  // 自キャラとアイテム2の当たり判定
+
+	posA[1] = player_->GetWorldPosition();
+
+	    posB[1] = aitem_->GetWorldPosition2();
+
+	    X[1] = (posB[1].x - posA[1].x);
+	    Y[1] = (posB[1].y - posA[1].y);
+	    Z[1] = (posB[1].z - posA[1].z);
+
+	    center[1] = X[1] * X[1] + Y[1] * Y[1] + Z[1] * Z[1];
+	  
+
+	    if (center[1] <= (RR * RR)) {
+		    // 自キャラの衝突時コールバックを呼び出す
+		    player_->OnColision();
+		    // 敵弾の衝突時コールバックを呼び出す
+		    aitem_->OnColision2();
+
+		    score += 1;
+	    }
+#pragma endregion
+
+#pragma region  // 自キャラとアイテム3の当たり判定
+	    posA[2] = player_->GetWorldPosition();
+
+	    posB[2] = aitem_->GetWorldPosition3();
+
+	    X[2] = (posB[2].x - posA[2].x);
+	    Y[2] = (posB[2].y - posA[2].y);
+	    Z[2] = (posB[2].z - posA[2].z);
+
+	    center[2] = X[2] * X[2] + Y[2] * Y[2] + Z[2] * Z[2];
+	   
+
+	    if (center[2] <= (RR * RR)) {
+		    // 自キャラの衝突時コールバックを呼び出す
+		    player_->OnColision();
+		    // 敵弾の衝突時コールバックを呼び出す
+		    aitem_->OnColision3();
+
+		    score += 1;
+	    }
+#pragma endregion
 }
 
 void GameScene::Draw() {
@@ -143,7 +230,7 @@ void GameScene::Draw() {
 
 	ground_->Draw(viewProjection_);
 
-	enemy_->Draw(viewProjection_);
+	//enemy_->Draw(viewProjection_);
 
 	aitem_->Draw(viewProjection_);
 
@@ -163,4 +250,12 @@ void GameScene::Draw() {
 	Sprite::PostDraw();
 
 #pragma endregion
+}
+
+void GameScene::Reset() {
+
+player_->Reset();
+
+ score = 0;
+
 }

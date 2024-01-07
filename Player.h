@@ -54,6 +54,9 @@ class Player : public BaseCharacter {
 	// 攻撃行動初期化
 	void BehaviorAttackInitialize();
 
+	void Reset();
+
+	void OnColision();
 
 private:
 
@@ -78,5 +81,7 @@ private:
 
 	float X = 0;
 	float Ease = 0;
+
+
 
 	};
