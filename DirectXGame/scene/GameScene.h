@@ -79,7 +79,7 @@ private: // メンバ変数
 	Input* input_ = nullptr;
 	Audio* audio_ = nullptr;
 
-	uint32_t textureHandle_ = 0;
+	
 	std::unique_ptr <Model> model_ = nullptr;
 
 	//3Dモデル
@@ -124,7 +124,12 @@ private: // メンバ変数
 
 	int maxScore = 15;
 
-	
+	 int life = 1;
+
+	 // ライフ
+	 uint32_t scoreHandle_;
+	 Sprite* scoreSp[15] = {nullptr};
+
 
 	/// <summary>
 	/// ゲームシーン用

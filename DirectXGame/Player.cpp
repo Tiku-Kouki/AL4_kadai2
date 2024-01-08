@@ -21,7 +21,7 @@ void Player::Initalize(const std::vector<Model*>& models) {
 
 	worldTransform_[0].scale_ = {3.0f, 3.0f, 3.0f};
 	worldTransform_[0].rotation_ = {0.0f, 0.0f, 0.0f};
-	worldTransform_[0].translation_ = {0.0f, 0.0f, 0.0f};
+	worldTransform_[0].translation_ = {0.0f, 0.0f, -50.0f};
 
 	worldTransform_[1].scale_ = {1.0f, 1.0f, 1.0f};
 	worldTransform_[1].rotation_ = {0.0f, 0.0f, 0.0f};
@@ -100,8 +100,7 @@ void Player::Update() {
 	}
 	hammer.UpdateMatrix();
 
-	#ifdef DEBUG
-
+	#ifdef _DEBUG
 	ImGui::Begin("player");
 
 	ImGui::DragFloat3("Body", &worldTransform_[0].translation_.x, 0.01f);
@@ -115,6 +114,10 @@ void Player::Update() {
 
 	ImGui::End();
 #endif // DEBUG
+
+
+	
+
 
 }
 
@@ -327,7 +330,7 @@ void Player::Reset() {
 
 	worldTransform_[0].scale_ = {3.0f, 3.0f, 3.0f};
 	worldTransform_[0].rotation_ = {0.0f, 0.0f, 0.0f};
-	worldTransform_[0].translation_ = {0.0f, 0.0f, 0.0f};
+	worldTransform_[0].translation_ = {0.0f, 0.0f, -50.0f};
 
 	worldTransform_[1].scale_ = {1.0f, 1.0f, 1.0f};
 	worldTransform_[1].rotation_ = {0.0f, 0.0f, 0.0f};

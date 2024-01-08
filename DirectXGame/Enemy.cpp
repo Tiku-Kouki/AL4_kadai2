@@ -42,8 +42,8 @@ void Enemy::Update() {
 	worldTransform_[0].rotation_.y = -angle;
 		
 
-	worldTransform_[0].translation_.x = 0 + std::cos(angle) * 10.0f;
-	worldTransform_[0].translation_.z = 0 + std::sin(angle) * 10.0f;
+	worldTransform_[0].translation_.x = 0 + std::cos(angle) * 42.0f;
+	worldTransform_[0].translation_.z = 0 + std::sin(angle) * 42.0f;
 	
 	for (int i = 0; i < 3; i++) {
 		

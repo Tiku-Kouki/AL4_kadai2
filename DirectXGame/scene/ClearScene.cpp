@@ -22,22 +22,19 @@ void ClearScene::Initialize() {
 	input_ = Input::GetInstance();
 	audio_ = Audio::GetInstance();
 
-	//uint32_t textureClear = TextureManager::Load("clear.png");
+	uint32_t textureClear = TextureManager::Load("clear.png");
 
 	// スプライト生成
-	//clear_ = Sprite::Create(textureClear, {640.0f, 360.0f}, {1.0f, 1.0f, 1.0f, 1}, {0.5f, 0.5f});
+	clear_ = Sprite::Create(textureClear, {640.0f, 360.0f}, {1.0f, 1.0f, 1.0f, 1}, {0.5f, 0.5f});
 
 }
 
 void ClearScene::Update() {
 
-
-	
 	if (input_->TriggerKey(DIK_SPACE)) {
 
 		isSceneEnd = true;
-	} else 
-	{
+	} else {
 		isSceneEnd = false;
 	}
 
@@ -83,7 +80,7 @@ void ClearScene::Draw() {
 	/// <summary>
 	/// ここに前景スプライトの描画処理を追加できる
 
-	//clear_->Draw();
+	clear_->Draw();
 
 	/// </summary>
 

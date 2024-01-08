@@ -70,9 +70,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	gameScene = new GameScene();
 	gameScene->Initialize();
 
-	// ゲームシーンの初期化
-	gameScene = new GameScene();
-	gameScene->Initialize();
+	  // タイトルシーンの初期化
+	titleScene = new TitleScene();
+	titleScene->Initialize();
 
 	gameOverScene = new GameOverScene();
 	gameOverScene->Initialize();

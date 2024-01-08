@@ -5,7 +5,11 @@
 GameScene::GameScene() {}
 
 GameScene::~GameScene() { 
-	
+		// スプライト生成
+	for (int i = 0; i < 15; i++) {
+
+		delete scoreSp[i]; 
+	}
 
 }
 
@@ -14,10 +18,15 @@ void GameScene::Initialize() {
 	dxCommon_ = DirectXCommon::GetInstance();
 	input_ = Input::GetInstance();
 	audio_ = Audio::GetInstance();
-	textureHandle_ = TextureManager::Load("mario.png");
-
 	
+	scoreHandle_ = TextureManager::Load("onigiri.png");
 
+	// スプライト生成
+	for (int i = 0; i < 15; i++) {
+
+		scoreSp[i] = Sprite::Create(
+		    scoreHandle_, {40.0f + (20.0f * i), 40.0f}, {1.0f, 1.0f, 1.0f, 1}, {0.5f, 0.5f});
+	}
 	// 3Dモデル
 
 	modelFighterBody_.reset(Model::CreateFromOBJ("float_Body", true));
@@ -100,7 +109,19 @@ void GameScene::Update() {
 	 
 	 	   isSceneEnd = true;
 	 
+	 } else {
+		   isSceneEnd = false;
 	 }
+
+
+	 if (life <= 0) {
+	 
+	 isGameOver = true;
+	 
+	 } else {
+	 isGameOver = false;
+	 }
+
 
 
 #ifdef _DEBUG
@@ -201,6 +222,29 @@ float center[3] ;
 		    score += 1;
 	    }
 #pragma endregion
+
+		#pragma region // 自キャラと敵の当たり判定
+
+	    posA[0] = player_->GetWorldPosition();
+
+	    posB[0] = enemy_->GetWorldPosition();
+
+	    X[0] = (posB[0].x - posA[0].x);
+	    Y[0] = (posB[0].y - posA[0].y);
+	    Z[0] = (posB[0].z - posA[0].z);
+
+	    center[0] = X[0] * X[0] + Y[0] * Y[0] + Z[0] * Z[0];
+
+	    if (center[0] <= (RR * RR)) {
+		    // 自キャラの衝突時コールバックを呼び出す
+		    player_->OnColision();
+		   
+
+		    life -= 1;
+	    }
+
+#pragma endregion
+
 }
 
 void GameScene::Draw() {
@@ -236,7 +280,7 @@ void GameScene::Draw() {
 
 	ground_->Draw(viewProjection_);
 
-	//enemy_->Draw(viewProjection_);
+	enemy_->Draw(viewProjection_);
 
 	aitem_->Draw(viewProjection_);
 
@@ -252,6 +296,15 @@ void GameScene::Draw() {
 	/// ここに前景スプライトの描画処理を追加できる
 	/// </summary>
 
+	// スプライト生成
+	for (int i = 0; i < 15; i++) {
+		    if (score >= i + 1) {
+
+			    scoreSp[i]->Draw();
+		    }
+
+	}
+
 	// スプライト描画後処理
 	Sprite::PostDraw();
 
@@ -263,5 +316,7 @@ void GameScene::Reset() {
 player_->Reset();
 
  score = 0;
+
+life = 1;	 
 
 }
