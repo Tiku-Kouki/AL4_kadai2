@@ -117,7 +117,10 @@
     <ClCompile Include="Ground.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="scene\ClearScene.cpp" />
+    <ClCompile Include="scene\GameOverScene.cpp" />
     <ClCompile Include="scene\GameScene.cpp" />
+    <ClCompile Include="scene\TitleScene.cpp" />
     <ClCompile Include="Skydome.cpp" />
     <ClCompile Include="WorldTransformEX.cpp" />
   </ItemGroup>
@@ -156,7 +159,11 @@
     <ClInclude Include="math\Vector3.h" />
     <ClInclude Include="math\Vector4.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="scene\ClearScene.h" />
+    <ClInclude Include="scene\GameOverScene.h" />
     <ClInclude Include="scene\GameScene.h" />
+    <ClInclude Include="scene\Scene.h" />
+    <ClInclude Include="scene\TitleScene.h" />
     <ClInclude Include="Skydome.h" />
   </ItemGroup>
   <ItemGroup>

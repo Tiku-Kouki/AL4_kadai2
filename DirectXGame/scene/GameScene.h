@@ -16,6 +16,7 @@
 #include "FollowCamera.h"
 #include "Enemy.h"
 #include "Aitem.h"
+#include "Scene.h"
 
 /// <summary>
 /// ゲームシーン
@@ -52,6 +53,24 @@ public: // メンバ関数
 	/// 描画
 	/// </summary>
 	void Draw();
+
+	bool isSceneEnd = false;
+	bool IsSceneEnd() { return isSceneEnd; }
+
+	bool isGameOver = false;
+	bool IsGameOver() { return isGameOver; }
+
+	SceneType NextScene() {
+
+		if (isSceneEnd == true) {
+			return SceneType::kClearGame;
+		} else if (isGameOver == true) {
+			return SceneType::kGameOver;
+		}
+		return SceneType::kGamePlay;
+	}
+
+	SceneType GameOver() { return SceneType::kGameOver; }
 
 	void Reset();
 

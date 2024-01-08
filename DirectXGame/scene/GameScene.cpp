@@ -98,7 +98,7 @@ void GameScene::Update() {
 
 	 if (score >= maxScore) {
 	 
-	 
+	 	   isSceneEnd = true;
 	 
 	 }
 
