@@ -80,7 +80,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	clearScene = new ClearScene();
 	clearScene->Initialize();
 
-	SceneType sceneNo = SceneType::kGamePlay;
+	SceneType sceneNo = SceneType::kTitle;
 
 
 	// メインループ

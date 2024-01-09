@@ -11,7 +11,7 @@ void Aitem::Initalize(const std::vector<Model*>& models) {
 	
 
 	worldTransform_[0].scale_ = {3.0f, 3.0f, 3.0f};
-	worldTransform_[0].rotation_ = {0.0f, 0.0f, 0.0f};
+	worldTransform_[0].rotation_ = {0.0f, 10.0f, 0.0f};
 	worldTransform_[0].translation_ = {0.0f, 4.0f, 10.0f};
 
 	worldTransform_[1].scale_ = {3.0f, 3.0f, 3.0f};
@@ -19,7 +19,7 @@ void Aitem::Initalize(const std::vector<Model*>& models) {
 	worldTransform_[1].translation_ = {10.0f, 4.0f, -20.0f};
 
 	worldTransform_[2].scale_ = {3.0f, 3.0f, 3.0f};
-	worldTransform_[2].rotation_ = {0.0f, 0.0f, 0.0f};
+	worldTransform_[2].rotation_ = {0.0f, -2.0f, 0.0f};
 	worldTransform_[2].translation_ = {50.9f, 4.0f, 1.0f};
 
 	for (int i = 0; i < 3; i++) {
@@ -34,7 +34,7 @@ void Aitem::Update() {
 
 	for (int i = 0; i < 3; i++) {
 
-		worldTransform_[i].rotation_.y += 0.009f;
+		worldTransform_[i].rotation_.y += 0.01f;
 
 		worldTransform_[i].UpdateMatrix();
 	}
