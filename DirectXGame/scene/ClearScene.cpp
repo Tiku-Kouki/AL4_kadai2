@@ -33,13 +33,17 @@ void ClearScene::Initialize() {
 
 void ClearScene::Update() {
 
-	if (!audio_->IsPlaying(voiceHandle_)) {
+	
+	if (clear==0) {
 
 		voiceHandle_ = audio_->PlayWave(soundDataHandle_);
+
+		clear++;
 	}
 
+
 	if (input_->TriggerKey(DIK_SPACE)) {
-		audio_->StopWave(voiceHandle_);
+		clear = 0;
 		isSceneEnd = true;
 	} else {
 		isSceneEnd = false;

@@ -90,8 +90,9 @@ void GameScene::Initialize() {
 	ground_->Initialize(modelGround_.get());
 
 	 soundDataHandle_ = audio_->LoadWave("wafuu.wav");
-	
+	eatSound_ = audio_->LoadWave("eat.wav");
 
+	
 }
 
 void GameScene::Update() {
@@ -178,6 +179,8 @@ float center[3] ;
 			aitem_->OnColision1();
 			
 			score += 1;
+
+			voiceHandle2_ = audio_->PlayWave(eatSound_);
 		}
 	
 #pragma endregion
@@ -202,6 +205,8 @@ float center[3] ;
 		    aitem_->OnColision2();
 
 		    score += 1;
+
+			voiceHandle2_ = audio_->PlayWave(eatSound_);
 	    }
 #pragma endregion
 
@@ -224,6 +229,8 @@ float center[3] ;
 		    aitem_->OnColision3();
 
 		    score += 1;
+
+			voiceHandle2_ = audio_->PlayWave(eatSound_);
 	    }
 #pragma endregion
 
