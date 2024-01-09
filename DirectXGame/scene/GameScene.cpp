@@ -89,13 +89,17 @@ void GameScene::Initialize() {
 	modelGround_.reset(Model::CreateFromOBJ("ground", true));
 	ground_->Initialize(modelGround_.get());
 
-	
+	 soundDataHandle_ = audio_->LoadWave("wafuu.wav");
 	
 
 }
 
 void GameScene::Update() {
 
+	if (!audio_->IsPlaying(voiceHandle_)) {
+
+		voiceHandle_ = audio_->PlayWave(soundDataHandle_);
+	 }
 	
 	player_->Update();
 	skydome_->Update();
@@ -106,7 +110,7 @@ void GameScene::Update() {
 	 CheckAllCollisions();
 
 	 if (score >= maxScore) {
-	 
+		audio_->StopWave(voiceHandle_);
 	 	   isSceneEnd = true;
 	 
 	 } else {
@@ -115,7 +119,7 @@ void GameScene::Update() {
 
 
 	 if (life <= 0) {
-	 
+		   audio_->StopWave(voiceHandle_);
 	 isGameOver = true;
 	 
 	 } else {

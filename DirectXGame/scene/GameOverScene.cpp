@@ -22,12 +22,21 @@ void GameOverScene::Initialize() {
 	uint32_t textureGameOver = TextureManager::Load("gameOver.png");
 	gameOver_ = Sprite::Create(textureGameOver, {640.0f, 360.0f}, {1.0f, 1.0f, 1.0f, 1}, {0.5f, 0.5f});
 
+	
+	soundDataHandle_ = audio_->LoadWave("bom.wav");
+
+
 }
 
 void GameOverScene::Update() {
 
-	if (input_->TriggerKey(DIK_SPACE)) {
+	if (!audio_->IsPlaying(voiceHandle_)) {
 
+		voiceHandle_ = audio_->PlayWave(soundDataHandle_);
+	}
+
+	if (input_->TriggerKey(DIK_SPACE)) {
+		audio_->StopWave(voiceHandle_);
 		isSceneEnd = true;
 	} else {
 		isSceneEnd = false;

@@ -31,11 +31,17 @@ void TitleScene::Initialize()
 	
 	title_ = Sprite::Create(textureTitle, {640.0f, 360.0f}, {1.0f, 1.0f, 1.0f, 1}, {0.5f, 0.5f});
 	manual_ = Sprite::Create(textureManual, {640.0f, 360.0f}, {1.0f, 1.0f, 1.0f, 1}, {0.5f, 0.5f});
+
+	soundDataHandle_ = audio_->LoadWave("title.wav");
+
 }
 
 void TitleScene::Update()
 {
-	
+	if (!audio_->IsPlaying(voiceHandle_)) {
+
+		voiceHandle_ = audio_->PlayWave(soundDataHandle_);
+	}
 	
 		if (input_->TriggerKey(DIK_SPACE) && titleMenu == kTitle) {
 
@@ -44,6 +50,7 @@ void TitleScene::Update()
 
 	    if (input_->TriggerKey(DIK_SPACE) && titleMenu == kManual) {
 		titleMenu = kTitle;
+		audio_->StopWave(voiceHandle_);
 		isSceneEnd = true;
 	} else {
 		isSceneEnd = false;
