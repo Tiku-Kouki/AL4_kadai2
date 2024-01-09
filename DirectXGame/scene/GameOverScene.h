@@ -56,4 +56,6 @@ private: // メンバ変数
 
 	uint32_t voiceHandle_ = 0;
 
+	int bom = 0;
+
 };

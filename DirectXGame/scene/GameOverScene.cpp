@@ -30,13 +30,14 @@ void GameOverScene::Initialize() {
 
 void GameOverScene::Update() {
 
-	if (!audio_->IsPlaying(voiceHandle_)) {
+	if (bom==0) {
 
 		voiceHandle_ = audio_->PlayWave(soundDataHandle_);
+		bom = 1;
 	}
 
 	if (input_->TriggerKey(DIK_SPACE)) {
-		audio_->StopWave(voiceHandle_);
+		bom = 0;
 		isSceneEnd = true;
 	} else {
 		isSceneEnd = false;
