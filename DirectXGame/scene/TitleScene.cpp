@@ -43,18 +43,33 @@ void TitleScene::Update()
 		voiceHandle_ = audio_->PlayWave(soundDataHandle_);
 	}
 	
-		if (input_->TriggerKey(DIK_SPACE) && titleMenu == kTitle) {
+	  XINPUT_STATE joyState;
 
-		titleMenu = kManual;
-	} else
+	if (Input::GetInstance()->GetJoystickState(0, joyState)) {
+	
+		  if (joyState.Gamepad.wButtons == XINPUT_GAMEPAD_A && titleMenu == kManual) {
+			titleMenu = kTitle;
+			audio_->StopWave(voiceHandle_);
+			isSceneEnd = true;
+		} else {
+			isSceneEnd = false;
+		}
+	
+		 if (input_->TriggerKey(DIK_SPACE) && titleMenu == kTitle) {
 
-	    if (input_->TriggerKey(DIK_SPACE) && titleMenu == kManual) {
-		titleMenu = kTitle;
-		audio_->StopWave(voiceHandle_);
-		isSceneEnd = true;
-	} else {
-		isSceneEnd = false;
+			titleMenu = kManual;
+		} 
+
+		 if (input_->TriggerKey(DIK_R)) {
+
+			titleMenu = kTitle;
+		} 
+
 	}
+
+	
+
+	    
 
 
 

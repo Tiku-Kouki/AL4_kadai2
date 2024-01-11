@@ -87,6 +87,8 @@ void Aitem::OnColision1() {
   
 	worldTransform_[0].translation_.x = (float)n;
 
+	
+
 	n = rand() % 100 - 100;
 
 	worldTransform_[0].translation_.z = (float)n;
@@ -102,6 +104,17 @@ void Aitem::OnColision2() {
 
 	worldTransform_[1].translation_.x = (float)n;
 
+	n = rand() % 9 + 1;
+	if (n > 5) {
+
+	n = 9;
+
+	} else {
+	n = 4;
+	}
+	worldTransform_[1].translation_.y = (float)n;
+
+
 	n = rand() % 100 - 100;
 
 	worldTransform_[1].translation_.z = (float)n;
@@ -116,6 +129,16 @@ void Aitem::OnColision3() {
 	n = rand() % 100 - 100;
 
 	worldTransform_[2].translation_.x = (float)n;
+
+	n = rand() % 9 + 1;
+	if (n > 3) {
+
+	n = 9;
+
+	} else {
+	n = 4;
+	}
+	worldTransform_[2].translation_.y = (float)n;
 
 	n = rand() % 100 - 100;
 

@@ -68,6 +68,12 @@ void Player::Update() {
 		BehaviorAttackInitialize();
 		
 		break;
+	case Behavior::kJump:
+
+		BehaviorJumpInitialize();
+
+		break;
+		
 	}
 	   //振る舞いリセット
 	  behaviorRequest_ = std::nullopt;
@@ -82,6 +88,12 @@ void Player::Update() {
 	case Behavior::kAttack:
 
 	  BehaviorAttackUpdate();
+
+	  break;
+
+	case Behavior::kJump:
+
+	  BehaviorJumpUpdate();
 
 	  break;
 	}
@@ -182,7 +194,15 @@ void Player::BehaviorRootUpdate() {
 
 	if (Input::GetInstance()->GetJoystickState(0, joyState)) {
 
-		
+		if (joyState.Gamepad.wButtons == XINPUT_GAMEPAD_B) {
+
+		behaviorRequest_ = Behavior::kJump;
+		}
+
+		   velocity_ = {
+		    (float)joyState.Gamepad.sThumbLX / SHRT_MAX * kCharacterSpeed, 0.0f,
+		    (float)joyState.Gamepad.sThumbLY / SHRT_MAX * kCharacterSpeed};
+
 
 
 		move.x += (float)joyState.Gamepad.sThumbLX / SHRT_MAX * kCharacterSpeed;
@@ -206,12 +226,12 @@ void Player::BehaviorRootUpdate() {
 
 		Matrix4x4 rotateXYZMatrix = Multiply(rotateXMatrix, Multiply(rotateYMatrix, rotateZMatrix));
 
-		move = TransformNormal(move, rotateXYZMatrix);
+		velocity_ = TransformNormal(velocity_, rotateXYZMatrix);
 
-		if (move.x != 0 || move.z != 0) {
+		if (velocity_.x != 0 || velocity_.z != 0) {
 
 			for (int i = 0; i < 4; i++) {
-				worldTransform_[0].rotation_.y = std::atan2(move.x, move.z);
+			worldTransform_[0].rotation_.y = std::atan2(velocity_.x, velocity_.z);
 			}
 		}
 	}
@@ -219,12 +239,16 @@ void Player::BehaviorRootUpdate() {
 	UpdateFloatingGimmick();
 
 
-	if (joyState.Gamepad.wButtons == XINPUT_GAMEPAD_A ||
-	    joyState.Gamepad.wButtons == XINPUT_GAMEPAD_B) {
+	if (joyState.Gamepad.wButtons == XINPUT_GAMEPAD_A 
+	    ) {
 
-		worldTransform_[0].translation_.x += move.x * 10;
-		worldTransform_[0].translation_.y += move.y;
-		worldTransform_[0].translation_.z += move.z * 10;
+		velocity_.x *= 10;
+
+		velocity_.z *= 10;
+
+		worldTransform_[0].translation_.x += velocity_.x ;
+		worldTransform_[0].translation_.y += velocity_.y;
+		worldTransform_[0].translation_.z += velocity_.z;
 
 		
 		worldTransform_[2].rotation_ = {0.45f, 0.0f, 0.0f};
@@ -234,9 +258,13 @@ void Player::BehaviorRootUpdate() {
 
 	} else {
 	
-		worldTransform_[0].translation_.x += move.x * 7;
-		worldTransform_[0].translation_.y += move.y;
-		worldTransform_[0].translation_.z += move.z * 7;
+		velocity_.x *= 7;
+
+		velocity_.z *= 7;
+
+		worldTransform_[0].translation_.x += velocity_.x ;
+		worldTransform_[0].translation_.y += velocity_.y;
+		worldTransform_[0].translation_.z += velocity_.z ;
 
 		worldTransform_[2].rotation_ = {0.0f, 0.0f, 0.0f};
 
@@ -344,6 +372,34 @@ void Player::Reset() {
 	worldTransform_[3].rotation_ = {0.0f, 0.0f, 0.0f};
 	worldTransform_[3].translation_ = {0.51f, 1.26f, 0.0f};
 
+}
+void Player::BehaviorJumpInitialize() {
+	worldTransform_[0].translation_.y = 0.0f;
+
+	worldTransform_[2].rotation_.x = 0;
+	;
+	worldTransform_[3].rotation_.x = 0;
+
+	const float kJumpFirstSpeed = 1.0f;
+
+	velocity_.y = kJumpFirstSpeed;
+}
+
+void Player::BehaviorJumpUpdate() {
+
+	worldTransform_[0].translation_ = Add(worldTransform_[0].translation_, velocity_);
+
+	const float kGravityAcceleration = 0.06f;
+
+	Vector3 accelerationVector = {0, -kGravityAcceleration, 0};
+
+	velocity_ = Add(velocity_, accelerationVector);
+
+	if (worldTransform_[0].translation_.y < 0.0f) {
+	worldTransform_[0].translation_.y = 0;
+
+	behaviorRequest_ = Behavior::kRoot;
+	}
 }
 
 void Player::OnColision() {}
