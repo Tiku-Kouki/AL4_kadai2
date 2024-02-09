@@ -17,6 +17,7 @@
 #include "Enemy.h"
 #include "Aitem.h"
 #include "Scene.h"
+#include "Fade.h"
 
 /// <summary>
 /// ゲームシーン
@@ -119,6 +120,14 @@ private: // メンバ変数
 	std::unique_ptr<Aitem> aitem_ = nullptr;
 
 	std::unique_ptr<FollowCamera>followCamera_ = nullptr;
+
+	std::unique_ptr<Fade> fade_ = nullptr;
+
+	int fadeSw = 0;
+	float fadeNom = 1.0f;
+
+	bool fadeIn = false;
+	bool fadeOut = false;
 
 	int score = 0;
 

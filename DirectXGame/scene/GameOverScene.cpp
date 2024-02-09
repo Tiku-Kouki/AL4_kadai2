@@ -30,16 +30,46 @@ void GameOverScene::Initialize() {
 
 void GameOverScene::Update() {
 
-	if (bom==0) {
+	fade_->Update(fadeSw);
+
+	fadeSw = fade_->GetFadeMode();
+
+	if ((fade_->GetColor() > 0.0f) && (isSceneEnd == false) && (fadeOut == false)) {
+		fadeIn = true;
+		fade_->FadeInStart();
+	}
+
+	if ((fade_->GetColor() < 1.0f) && (fadeOut == true) && (fadeIn == false)) {
+
+		fade_->FadeOutStart();
+	}
+
+	if (fade_->GetFadeMode() == 0) {
+		fadeIn = false;
+		fadeOut = false;
+	}
+
+	if (bom == 0 && (fade_->GetColor() == 0.0f)) {
 
 		voiceHandle_ = audio_->PlayWave(soundDataHandle_);
 		bom = 1;
 	}
 
-	if (input_->TriggerKey(DIK_SPACE)) {
-		bom = 0;
-		isSceneEnd = true;
+	if (input_->TriggerKey(DIK_SPACE) && fade_->GetFadeMode() == 0) {
+
+		flage = true;
+	}
+	if (flage == true) {
+
+		fadeOut = true;
+
+		if (fade_->GetColor() == 1.0f) {
+			bom = 0;
+			isSceneEnd = true;
+		}
+
 	} else {
+		flage = false;
 		isSceneEnd = false;
 	}
 
@@ -85,6 +115,8 @@ void GameOverScene::Draw() {
 	/// ここに前景スプライトの描画処理を追加できる
 
 	gameOver_->Draw();
+
+	fade_->Draw();
 
 	/// </summary>
 

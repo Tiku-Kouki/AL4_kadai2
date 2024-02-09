@@ -29,12 +29,34 @@ void ClearScene::Initialize() {
 
 	soundDataHandle_ = audio_->LoadWave("koto.wav");
 
+	fade_ = std::make_unique<Fade>();
+
+	fade_->Initialize(fadeNom);
+
 }
 
 void ClearScene::Update() {
 
+	fade_->Update(fadeSw);
 	
-	if (clear==0) {
+	fadeSw = fade_->GetFadeMode();
+
+	if ((fade_->GetColor() > 0.0f) && (isSceneEnd == false) && (fadeOut == false)) {
+		fadeIn = true;
+		fade_->FadeInStart();
+	}
+
+	if ((fade_->GetColor() < 1.0f) && (fadeOut == true) && (fadeIn == false)) {
+
+		fade_->FadeOutStart();
+	}
+
+	if (fade_->GetFadeMode() == 0) {
+		fadeIn = false;
+		fadeOut = false;
+	}
+
+	if (clear == 0 && (fade_->GetColor() == 0.0f)) {
 
 		voiceHandle_ = audio_->PlayWave(soundDataHandle_);
 
@@ -42,13 +64,33 @@ void ClearScene::Update() {
 	}
 
 
-	if (input_->TriggerKey(DIK_SPACE)) {
-		clear = 0;
-		isSceneEnd = true;
+	if (input_->TriggerKey(DIK_SPACE) && fade_->GetFadeMode() == 0) {
+		
+		 flage = true;
+
+	} 
+	if (flage == true) {
+	
+		fadeOut = true;
+
+		if (fade_->GetColor() == 1.0f) {
+			clear = 0;
+			isSceneEnd = true;
+		}
+	
 	} else {
+		flage = false;
 		isSceneEnd = false;
 	}
 
+
+	ImGui::Begin("fade");
+
+	ImGui::Text("%f", fade_->GetColor());
+	ImGui::Text("%d", fadeSw);
+	ImGui::Text("%d", isSceneEnd);
+
+	ImGui::End();
 
 }
 
@@ -92,6 +134,8 @@ void ClearScene::Draw() {
 	/// ここに前景スプライトの描画処理を追加できる
 
 	clear_->Draw();
+
+	fade_->Draw();
 
 	/// </summary>
 

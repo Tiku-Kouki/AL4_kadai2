@@ -8,6 +8,7 @@
 #include "Sprite.h"
 #include "ViewProjection.h"
 #include "WorldTransform.h"
+#include "Fade.h"
 
 class GameOverScene {
 
@@ -57,5 +58,15 @@ private: // メンバ変数
 	uint32_t voiceHandle_ = 0;
 
 	int bom = 0;
+
+	int fadeSw = 0;
+	float fadeNom = 1.0f;
+
+	bool fadeIn = false;
+	bool fadeOut = false;
+
+	bool flage = false;
+
+	std::unique_ptr<Fade> fade_ = nullptr;
 
 };

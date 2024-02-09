@@ -161,6 +161,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			clearScene->Draw();
 			break;
 		}
+
+
+
 		// 軸表示の描画
 		axisIndicator->Draw();
 		// プリミティブ描画のリセット

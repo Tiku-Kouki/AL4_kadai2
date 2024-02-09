@@ -4,10 +4,14 @@
 #include "Input.h"
 #include "Model.h"
 #include "SafeDelete.h"
+#include "DebugCamera.h"
 #include "Sprite.h"
 #include "ViewProjection.h"
 #include "WorldTransform.h"
 #include "Scene.h"
+#include "TitleAitem.h"
+#include "FollowCamera.h"
+#include "Fade.h"
 
 enum TitleSceneType {
 	kTitle,
@@ -53,6 +57,7 @@ public: // メンバ関数
 
 	SceneType NextScene() { return SceneType::kGamePlay; }
 
+	
 
 
 private: // メンバ変数
@@ -60,6 +65,10 @@ private: // メンバ変数
 	Input* input_ = nullptr;
 	Audio* audio_ = nullptr;
 
+	  // 3Dモデル
+	std::unique_ptr<Model> modelUme_ = nullptr;
+
+	std::unique_ptr<TitleAitem> aitem_ = nullptr;
 	
 	Sprite* title_ = nullptr;
 	Sprite* manual_ = nullptr;
@@ -70,6 +79,23 @@ private: // メンバ変数
 	uint32_t soundDataHandle_ = 0;
 
 	uint32_t voiceHandle_ = 0;
+
+	ViewProjection viewProjection_;
+
+	std::unique_ptr<FollowCamera> followCamera_ = nullptr;
+
+	bool isDebugCameraActive_ = false;
+	DebugCamera* debugCamera_ = nullptr;
+
+	int fadeSw = 0;
+	float fadeNom = 1.0f;
+
+	bool fadeIn = false;
+	bool fadeOut = false;
+
+	bool flage = false;
+
+	std::unique_ptr<Fade> fade_ = nullptr;
 
 };
 

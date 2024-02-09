@@ -1,6 +1,7 @@
 #include "GameScene.h"
 #include "TextureManager.h"
 #include <cassert>
+ #include "ImGuiManager.h"
 
 GameScene::GameScene() {}
 
@@ -55,6 +56,10 @@ void GameScene::Initialize() {
 
 	player_ = std::make_unique<Player>();
 
+	fade_ = std::make_unique<Fade>();
+
+	fade_->Initialize(fadeNom);
+
 	std::vector<Model*> plyerModels = {
 	    modelFighterBody_.get(), modelFighterHead_.get(), modelFighterL_arm_.get(),
 	    modelFighterR_arm_.get(), Hammer.get()};
@@ -96,24 +101,50 @@ void GameScene::Initialize() {
 }
 
 void GameScene::Update() {
+	fadeSw = fade_->GetFadeMode();
+
+	if ((fade_->GetColor() > 0.0f) && (isSceneEnd == false) && (fadeOut == false)) {
+		fadeIn = true;
+		fade_->FadeInStart();
+	}
+
+	if ((fade_->GetColor() < 1.0f) && (fadeOut == true) && (fadeIn == false)) {
+		
+		fade_->FadeOutStart();
+	}
+
+	if (fadeSw == 0) {
+		fadeIn = false;
+		fadeOut = false;
+	
+	}
+
 
 	if (!audio_->IsPlaying(voiceHandle_)) {
 
 		voiceHandle_ = audio_->PlayWave(soundDataHandle_);
 	 }
-	
-	player_->Update();
+	if (fadeIn == false||fadeOut==false) {
+		player_->Update();
+	}
 	skydome_->Update();
 	ground_->Update();
-	enemy_->Update();
+	if (fadeIn == false || fadeOut == false) {
+		enemy_->Update();
+	}
 	aitem_->Update();
+	fade_->Update(fadeSw);
 
 	 CheckAllCollisions();
 
 	 if (score >= maxScore) {
 		audio_->StopWave(voiceHandle_);
-	 	   isSceneEnd = true;
-	 
+		fadeOut = true;
+
+		if (fade_->GetColor() == 1.0f) {
+
+			isSceneEnd = true;
+		}
 	 } else {
 		   isSceneEnd = false;
 	 }
@@ -121,12 +152,32 @@ void GameScene::Update() {
 
 	 if (life <= 0) {
 		   audio_->StopWave(voiceHandle_);
-	 isGameOver = true;
-	 
+
+		   fadeOut = true;
+		   if (fade_->GetColor() == 1.0f) {
+			isGameOver = true;
+		   }
 	 } else {
 	 isGameOver = false;
 	 }
+#ifdef _DEBUG
 
+	    
+
+	 
+
+	 if (input_->PushKey(DIK_SPACE)) {
+	 score = 15;
+	 };
+	     
+
+	 ImGui::Begin("fade");
+
+	 ImGui::Text("%f", fadeNom);
+	 ImGui::Text("%d", fadeSw);
+	 
+	 ImGui::End();
+#endif
 
 
 #ifdef _DEBUG
@@ -143,6 +194,8 @@ void GameScene::Update() {
 	viewProjection_.TransferMatrix();
 	//viewProjection_.UpdateMatrix();
 	
+	
+
 }
 
 void GameScene::CheckAllCollisions() {
@@ -330,6 +383,8 @@ void GameScene::Draw() {
 
 	}
 
+	fade_->Draw();
+
 	// スプライト描画後処理
 	Sprite::PostDraw();
 
@@ -342,6 +397,8 @@ player_->Reset();
 
  score = 0;
 
-life = 1;	 
+life = 1;	
+
+fadeOut = false;
 
 }

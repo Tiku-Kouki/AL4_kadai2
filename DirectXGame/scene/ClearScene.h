@@ -8,6 +8,7 @@
 #include "Sprite.h"
 #include "ViewProjection.h"
 #include "WorldTransform.h"
+#include "Fade.h"
 
 class ClearScene {
 
@@ -56,5 +57,14 @@ private: // メンバ変数
 
 	int clear = 0;
 
+	int fadeSw = 0;
+	float fadeNom = 1.0f;
+
+	bool fadeIn = false;
+	bool fadeOut = false;
+
+	bool flage = false;
+
+	std::unique_ptr<Fade> fade_ = nullptr;
 
 };
