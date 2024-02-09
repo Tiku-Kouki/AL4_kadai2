@@ -84,13 +84,7 @@ void ClearScene::Update() {
 	}
 
 
-	ImGui::Begin("fade");
-
-	ImGui::Text("%f", fade_->GetColor());
-	ImGui::Text("%d", fadeSw);
-	ImGui::Text("%d", isSceneEnd);
-
-	ImGui::End();
+	
 
 }
 
