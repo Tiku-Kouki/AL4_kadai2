@@ -161,6 +161,10 @@ float center[3] ;
 
 #pragma region // 自キャラとアイテム1の当たり判定
 	
+	 R1 = 3.0f; // 自分で決める
+	 R2 = 3.0f; // 自分で決める
+	
+
 	posA[0] = player_->GetWorldPosition();
 
 	posB[0] = aitem_->GetWorldPosition1();
@@ -187,6 +191,9 @@ float center[3] ;
 
 #pragma region  // 自キャラとアイテム2の当たり判定
 
+		R1 = 3.0f; // 自分で決める
+	    R2 = 3.0f; // 自分で決める
+
 	posA[1] = player_->GetWorldPosition();
 
 	    posB[1] = aitem_->GetWorldPosition2();
@@ -211,7 +218,11 @@ float center[3] ;
 #pragma endregion
 
 #pragma region  // 自キャラとアイテム3の当たり判定
-	    posA[2] = player_->GetWorldPosition();
+	  
+		R1 = 3.0f; // 自分で決める
+	    R2 = 3.0f; // 自分で決める
+		
+		posA[2] = player_->GetWorldPosition();
 
 	    posB[2] = aitem_->GetWorldPosition3();
 
@@ -235,6 +246,9 @@ float center[3] ;
 #pragma endregion
 
 		#pragma region // 自キャラと敵の当たり判定
+
+		R1 = 1.0f; // 自分で決める
+	    R2 = 1.0f; // 自分で決める
 
 	    posA[0] = player_->GetWorldPosition();
 

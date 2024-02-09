@@ -21,11 +21,11 @@ void Enemy::Initalize(const std::vector<Model*>& models) {
 
 	worldTransform_[1].scale_ = {1.0f, 1.0f, 1.0f};
 	worldTransform_[1].rotation_ = {0.0f, 0.0f, 0.0f};
-	worldTransform_[1].translation_ = {-0.9f, 1.0f, 0.0f};
+	worldTransform_[1].translation_ = {-1.06f, 1.35f, 0.5f};
 
 	worldTransform_[2].scale_ = {1.0f, 1.0f, 1.0f};
 	worldTransform_[2].rotation_ = {0.0f, 0.0f, 0.0f};
-	worldTransform_[2].translation_ = {0.9f, 1.0f, 0.0f};
+	worldTransform_[2].translation_ = {1.06f, 1.35f, 0.5f};
 
 	for (int i = 0; i < 3; i++) {
 		worldTransform_[i].Initialize();
@@ -50,7 +50,7 @@ void Enemy::Update() {
 
 		worldTransform_[i].UpdateMatrix();
 	}
-#ifdef DEBUG
+#ifdef _DEBUG
 	ImGui::Begin("Enemy");
 
 	ImGui::DragFloat3("Body", &worldTransform_[0].translation_.x, 0.01f);

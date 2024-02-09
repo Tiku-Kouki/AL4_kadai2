@@ -194,10 +194,7 @@ void Player::BehaviorRootUpdate() {
 
 	if (Input::GetInstance()->GetJoystickState(0, joyState)) {
 
-		if (joyState.Gamepad.wButtons == XINPUT_GAMEPAD_B) {
-
-		behaviorRequest_ = Behavior::kJump;
-		}
+		
 
 		   velocity_ = {
 		    (float)joyState.Gamepad.sThumbLX / SHRT_MAX * kCharacterSpeed, 0.0f,
@@ -238,6 +235,10 @@ void Player::BehaviorRootUpdate() {
 
 	UpdateFloatingGimmick();
 
+	if (joyState.Gamepad.wButtons == XINPUT_GAMEPAD_B) {
+
+		behaviorRequest_ = Behavior::kJump;
+		}
 
 	if (joyState.Gamepad.wButtons == XINPUT_GAMEPAD_A 
 	    ) {
